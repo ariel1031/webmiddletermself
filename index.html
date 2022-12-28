@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>영화 한 줄</title>
+        <script src="./script.js"></script>
+    </head>
+    <body>
+        <form onsubmit="handleSubmit(event)">
+            <input type="text" name="nickname" placeholder="닉네임" />
+            <input
+                type="text"
+                name="comment"
+                placeholder="영화를 본 소감을 남겨주세요"
+            />
+            <input type="submit" value="게시" />
+        </form>
+        <ul id="commentList"></ul>
+    </body>
+</html>
