@@ -13,6 +13,7 @@ const addList = (nickname, comment) => {
     console.log('addList의 nickname', nickname)
     console.log('addList의 comment', comment)
     const commentList = document.getElementById('commentList')
+    const f = document.createElement('form')
     const li = document.createElement('li')
     const nick = document.createElement('span')
     const com = document.createElement('span')
@@ -30,7 +31,8 @@ const addList = (nickname, comment) => {
     li.append(com)
     li.append(editButton)
     li.append(deleteButton)
-    commentList.append(li)
+    f.append(li)
+    commentList.append(f)
 }
 
 const deleteFunc = (e) => {
@@ -39,6 +41,7 @@ const deleteFunc = (e) => {
 }
 
 const editFunc = (e) => {
+    e.currentTarget.parentNode.remove() //부모노드, 즉 li 삭제
     console.log('e: ', e)
     console.log('e.currentTarget', e.currentTarget) //<button>수정</button>
     console.log('e.currentTarget.parentNode', e.currentTarget.parentNode) //<li><span>닉네임</span><><>......</li>
@@ -80,9 +83,15 @@ const editFunc = (e) => {
     deleteButton.innerText = '삭제'
     //이벤트 달기
 
-    e.currentTarget.parentNode.remove() //부모노드, 즉 li 삭제
+    // e.currentTarget.parentNode.remove() //부모노드, 즉 li 삭제
 
-    editButton.addEventListener('click', addList)
+    editButton.addEventListener(
+        'click',
+        addList(
+            e.currentTarget.parentNode.childNodes[0].innerText,
+            editInput.value
+        )
+    )
     deleteButton.addEventListener('click', deleteFunc)
     li.append(nick)
     li.append(editInput)
