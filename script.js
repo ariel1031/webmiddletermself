@@ -16,14 +16,33 @@ const addList = (nickname, comment) => {
     const f = document.createElement('form')
     const li = document.createElement('li')
     const nick = document.createElement('span')
-    const com = document.createElement('span')
-    const editButton = document.createElement('button')
-    const deleteButton = document.createElement('button')
-
     nick.innerText = nickname + ' '
+    const com = document.createElement('span')
     com.innerText = comment
+    const editButton = document.createElement('button')
     editButton.innerText = '수정'
+    const deleteButton = document.createElement('button')
     deleteButton.innerText = '삭제'
+
+    //editFunc
+    const editFunc = (e) => {
+        e.preventDefault() //form 안에 submit 역할하는 버튼을 눌러도 새로고침 되지 않음
+        const nickname = com.innerText
+        nick.remove()
+        const orCom = com.innerText
+        com.remove()
+        const editInput = document.createElement('input')
+        editInput.type = 'text'
+        editInput.value = orCom
+        li.prepend(editInput) //prepend() :콘텐츠를 선택한 요소 "내부의 시작 부분"에서 삽입
+        li.prepend(nick)
+
+        //li.append(editInput)
+        console.log('e.currentTarget', e.currentTarget) //<button>수정</button>
+        e.currentTarget.innerText = '수정완료'
+        e.currentTarget.removeEventListener('click', editFunc)
+        // e.currentTarget.addEventListener('click', editSuccess)
+    }
     //이벤트 달기
     editButton.addEventListener('click', editFunc)
     deleteButton.addEventListener('click', deleteFunc)
@@ -40,70 +59,82 @@ const deleteFunc = (e) => {
     e.currentTarget.parentNode.remove() //현재 타겟의 부모노드, 즉 li?
 }
 
-const editFunc = (e) => {
-    e.currentTarget.parentNode.remove() //부모노드, 즉 li 삭제
-    console.log('e: ', e)
-    console.log('e.currentTarget', e.currentTarget) //<button>수정</button>
-    console.log('e.currentTarget.parentNode', e.currentTarget.parentNode) //<li><span>닉네임</span><><>......</li>
-    // const editButton = (editButton.innerText = '수정완료')//
-    // editButton.removeEventListener('click') //************** removeEventListner
+// const editFunc = (e) => {
+//     //e.currentTarget.parentNode.remove() //부모노드, 즉 li 삭제
+//     console.log('e: ', e)
+//     console.log('e.currentTarget', e.currentTarget) //<button>수정</button>
+//     console.log('e.currentTarget.parentNode', e.currentTarget.parentNode) //<li><span>닉네임</span><><>......</li>
+//     // const editButton = (editButton.innerText = '수정완료')//
+//     // editButton.removeEventListener('click') //************** removeEventListner
 
-    console.log(
-        'e.currentTarget.parentNode.childNodes : ',
-        e.currentTarget.parentNode.childNodes
-    )
-    console.log(
-        'e.currentTarget.parentNode.childNodes[0] : ',
-        e.currentTarget.parentNode.childNodes[0]
-    )
-    console.log(
-        'e.currentTarget.parentNode.childNodes[0].innerText :',
-        e.currentTarget.parentNode.childNodes[0].innerText //가르송
-    )
-    console.log(
-        'e.currentTarget.parentNode.childNodes[1].innerText : ',
-        e.currentTarget.parentNode.childNodes[1].innerText
-    )
+//     console.log(
+//         'e.currentTarget.parentNode.childNodes : ',
+//         e.currentTarget.parentNode.childNodes
+//     )
+//     console.log(
+//         'e.currentTarget.parentNode.childNodes[0] : ',
+//         e.currentTarget.parentNode.childNodes[0]
+//     )
+//     console.log(
+//         'e.currentTarget.parentNode.childNodes[0].innerText :',
+//         e.currentTarget.parentNode.childNodes[0].innerText //가르송
+//     )
+//     console.log(
+//         'e.currentTarget.parentNode.childNodes[1].innerText : ',
+//         e.currentTarget.parentNode.childNodes[1].innerText
+//     )
+//     // const commentList = document.getElementById('commentList')
+//     // const li = document.createElement('li')
+//     // const nickname = e.currentTarget.parentNode.childNodes[0]
+//     // const comment = e.currentTarget.parentNode.childNodes[1]
 
-    //
+//     // e.currentTarget.parentNode.childNodes[0].remove()
+//     // e.currentTarget.parentNode.childNodes[1].remove()
 
-    const commentList = document.getElementById('commentList')
-    const li = document.createElement('li')
-    const nick = document.createElement('span')
-    const editInput = document.createElement('input') //comment
+//     // const editInput = document.createElement('input')
+//     // editInput.type = 'text'
+//     // editInput.value = comment
 
-    const editButton = document.createElement('button')
-    const deleteButton = document.createElement('button')
+//     // //
 
-    nick.innerText = e.currentTarget.parentNode.childNodes[0].innerText
-    editInput.type = 'text'
-    editInput.value = e.currentTarget.parentNode.childNodes[1].innerText
+//     const commentList = document.getElementById('commentList')
+//     const li = document.createElement('li')
+//     const nick = document.createElement('span')
+//     const editInput = document.createElement('input') //comment
 
-    editButton.innerText = '수정확인'
-    deleteButton.innerText = '삭제'
-    //이벤트 달기
+//     const editButton = document.createElement('button')
+//     const deleteButton = document.createElement('button')
 
-    // e.currentTarget.parentNode.remove() //부모노드, 즉 li 삭제
+//     nick.innerText = e.currentTarget.parentNode.childNodes[0].innerText
+//     editInput.type = 'text'
+//     editInput.value = e.currentTarget.parentNode.childNodes[1].innerText
 
-    editButton.addEventListener(
-        'click',
-        addList(
-            e.currentTarget.parentNode.childNodes[0].innerText,
-            editInput.value
-        )
-    )
-    deleteButton.addEventListener('click', deleteFunc)
-    li.append(nick)
-    li.append(editInput)
-    li.append(editButton)
-    li.append(deleteButton)
-    commentList.append(li)
-}
+//     editButton.innerText = '수정확인'
+//     deleteButton.innerText = '삭제'
+//     // //이벤트 달기
+
+//     // // e.currentTarget.parentNode.remove() //부모노드, 즉 li 삭제
+
+//     // editButton.addEventListener(
+//     //     'click',
+//     //     addList(
+//     //         e.currentTarget.parentNode.childNodes[0].innerText,
+//     //         editInput.value
+//     //     )
+//     // )
+//     deleteButton.addEventListener('click', deleteFunc)
+//     li.append(nick)
+//     li.append(editInput)
+//     li.append(editButton)
+//     li.append(deleteButton)
+//     commentList.append(li)
+// }
 
 //페이지 로딩
 const init = () => {
     console.log('data: ', data)
     data.forEach((item) => {
+        //반복문을 각각 실행
         console.log('item: ', item)
         addList(item[0], item[1])
         console.log('item[0]: ', item[0])
